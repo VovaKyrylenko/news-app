@@ -1,4 +1,4 @@
-import { SignInForm } from "@/components/SignInForm";
+import { SignInForm } from "@/components/sign-in-form";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 const LoginPage = () => {
