@@ -1,22 +1,36 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { loginSchema } from "@/lib/login-schema";
+import { loginSchema } from "@/validation/login";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const signInCredentials = async (data: z.infer<typeof loginSchema>) => {
+export interface SignInResponse {
+  success: boolean;
+  error: string | null;
+}
+
+export const signInCredentials = async (
+  data: z.infer<typeof loginSchema>,
+): Promise<SignInResponse> => {
   try {
-    await signIn("credentials", { ...data, redirect: false });
+    const result = await signIn("credentials", { ...data, redirect: false });
+
+    if (result?.error) {
+      return { success: false, error: "Invalid credentials!" };
+    }
+
+    return { success: true, error: null };
   } catch (error) {
     if (error instanceof AuthError) {
-      console.log("error cause:", error.type);
-      if (error.type === "CredentialsSignin") {
-        return { error: "Invalid credentials!" };
-      } else {
-        return { error: "Something went wrong!" };
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { success: false, error: "Invalid credentials!" };
+        default:
+          return { success: false, error: "Something went wrong!" };
       }
     }
-    throw error;
+
+    return { success: false, error: "An unexpected error occurred." };
   }
 };
