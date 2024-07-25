@@ -14,12 +14,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/lib/login-schema";
+import { loginSchema } from "@/validation/login";
 import { signInCredentials } from "@/actions/sign-in-credentials";
 import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+import { REDIRECT_ROUTE } from "@/routes";
 
 export const SignInForm = () => {
-  const toast = useToast();
+  const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,8 +33,12 @@ export const SignInForm = () => {
 
   async function onSubmit(data: z.infer<typeof loginSchema>) {
     const response = await signInCredentials(data);
+    if (response.success) {
+      router.replace(REDIRECT_ROUTE);
+      toast({ title: "Signed in successfully" });
+    }
     if (response?.error) {
-      toast.toast({
+      toast({
         title: response.error,
         variant: "destructive",
       });
