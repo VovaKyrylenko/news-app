@@ -1,7 +1,7 @@
-import { NewsGrid } from "@/components/news/news-list";
 import { getNews } from "@/actions/get-news";
 import { Pagination } from "@/components/pagination";
 import { Container } from "@/components/container";
+import { NewsGrid } from "@/components/news/news-list";
 import { SearchInput } from "@/components/search-input";
 import { SearchParams } from "@/types/search-params";
 
@@ -9,7 +9,7 @@ interface HomeProps {
   searchParams: SearchParams;
 }
 
-export default async function Home({
+export default async function Dashboard({
   searchParams: { currentPage, search },
 }: HomeProps) {
   const currentPageNumber = Number(currentPage ?? 1);
@@ -26,13 +26,13 @@ export default async function Home({
 
   const data = result.data;
   const totalPages = Math.ceil(data.totalNewsCount / pageSize);
-
+  console.log("data.news.length > 0:", data.news.length > 0);
   return (
     <Container>
       <SearchInput />
       {data.news.length > 0 ? (
         <>
-          <NewsGrid news={data.news} />
+          <NewsGrid news={data.news} isAdmin />
           <Pagination totalPages={totalPages} currentPage={currentPageNumber} />
         </>
       ) : (
