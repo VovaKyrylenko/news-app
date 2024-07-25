@@ -29,7 +29,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* @ts-expect-error Server Component */}
           <NavBar />
           <main>{children}</main>
         </ThemeProvider>
