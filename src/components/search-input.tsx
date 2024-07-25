@@ -22,6 +22,7 @@ export const SearchInput = () => {
     const params = new URLSearchParams(searchParams.toString());
     if (query) {
       params.set("search", query);
+      params.delete("currentPage");
     } else {
       params.delete("search");
     }
