@@ -29,21 +29,21 @@ export const MobileMenu = ({ session }: MobileMenuProps) => {
   }, [isOpen]);
 
   return (
-    <div className="md:hidden w-full flex justify-end items-center relative z-20 ml-4">
+    <div className="md:hidden w-full flex justify-end items-center relative z-40 ml-4">
       <div className="flex items-center space-x-2">
         <ModeToggle />
         <Button
           onClick={toggleMenu}
           variant="ghost"
           size="icon"
-          className="relative z-30"
+          className="relative z-50"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </Button>
       </div>
       {isOpen && (
-        <div className="fixed inset-0 z-20 flex flex-col items-center justify-center bg-background p-4">
+        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-background p-4">
           <ul className="w-full space-y-4 text-center">
             <li className="w-full">
               <Link
