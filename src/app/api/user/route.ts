@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUser } from "@/utils/db/create-user";
 import { getUserByEmail } from "@/utils/db/get-user-by-email";
-import { hashPassword } from "@utils/hash-password"
+import { hashPassword } from "@/utils/hash-password"
 
 export async function POST(req: NextRequest) {
   try {
