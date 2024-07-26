@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = await createUser({ email, password: hashPassword(password) });
+    const user = await createUser({ email, password: await hashPassword(password) });
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
