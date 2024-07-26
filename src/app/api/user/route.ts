@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createUser } from "@/utils/db/create-user";
 import { getUserByEmail } from "@/utils/db/get-user-by-email";
+import { hashPassword } from "@utils/hash-password"
 
 export async function POST(req: NextRequest) {
   try {
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = await createUser({ email, password });
+    const user = await createUser({ email, password: hashPassword(password) });
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
