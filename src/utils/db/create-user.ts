@@ -15,6 +15,6 @@ export async function createUser({ email, password }: CreateUserParams) {
     });
     return user;
   } catch (error) {
-    throw new Error("Error creating user: " + error.message);
+    throw new Error("Error creating user: " + error);
   }
 }
